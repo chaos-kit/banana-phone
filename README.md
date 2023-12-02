@@ -67,6 +67,11 @@ Command-line arguments for `ring.sh` to override config settings:
 - `--nostyle`: Turn off message autostyling.
 - `--reload`: Auto-reload the server upon file changes.
 
+#### Tips:
+- When you specify API keys in the .env file, make sur eyou separate them by commas without spaces: just,like,so.
+- Specifying any API keys bars queries that don't include them in their header. Set API_KEYS to "" for effective glasnost.
+- Use the same format for API keys as OpenAI uses when querying, i.e., `Authorization: Bearer {{key}}`.
+
 ### 📝 Adding Models to `models.json` for automatic prompt formatting:
 
 `models.json` includes premade configurations for Alpaca, ChatML, Llama2, Mistral, Orca, Phind, Vicuna, and Zephyr prompt formats, and has populated these configurations with a handful of currently popular models for automatic matching. To add more models under an existing configuation, simply take the model name or a sufficiently unique portion of a model name, taking care to match the case, and add it to the models array within the larger configuration dictionary. For example, if you wanted to add Mistral 7b, you would add it like so:
@@ -95,13 +100,11 @@ Command-line arguments for `ring.sh` to override config settings:
 
 Similarly, you can add entirely new configurations by replicating the structure of existing ones and filling the relevant information prefixes, suffixes, and stops, which are all readily found on `HuggingFace`.
 
-### Tips:
-- When you specify API keys in the .env file, separate them by commas without spaces,just,like,so.
-- Specifying any API keys bars queries that don't include them in their header. Set it API_KEYS to "" if you want to open it back up.
-- Use the same format for API keys as OpenAI uses when querying, i.e., `Authorization: Bearer {{key}}`.
+#### Tips:
 - Ensure the model IDs in the `models` array match those returned by the API's model endpoint, or at least a sufficiently unique portion of them.
-- You may encounter unexpected behavior if you use overly broad model shortnames such that the active model matches to multiple configurations.
-- JSON formatting is notoriously persnickity. A missing comma, curly bracket, or even inadvertently using curly instead of straight quotation marks will likely break the whole script. Consider a tool like `OK JSON` if you find yourself editing this or other JSONs frequently.
+- You may encounter unexpected behavior if you use overly broad model shortnames such that the model in use matches more than one configuration.
+- JSON formatting is notoriously persnickity. A missing comma, curly bracket, or even inadvertently using curly instead of straight quotation marks will likely break the whole script.
+- Consider a tool like `OK JSON` if you find yourself editing this or other JSONs frequently.
 
 ### ⚠️ Disclaimer
 

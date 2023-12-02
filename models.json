@@ -1,0 +1,132 @@
+{
+  "Alpaca": {
+    "models": [
+      "mythomax",
+      "openhermes",
+      "deepseek"
+    ],
+    "prefix": "\n### Instruction:\n",
+    "stops": [
+      "### Instruction"
+    ],
+    "suffix": "\n### Response:\n",
+    "sysPrefix": "### System\n",
+    "sysSuffix": "\n"
+  },
+  "Amazon": {
+    "models": [
+      "mistrallite"
+    ],
+    "prefix": "<|prompter|>",
+    "stops": [
+      "<|prompter|>",
+      "</s>"
+    ],
+    "suffix": "</s><|assistant|>",
+    "sysPrefix": "",
+    "sysSuffix": ""
+  },
+  "ChatML": {
+    "models": [
+      "dolphin"
+    ],
+    "prefix": "<|im_end|>\n<|im_start|>user\n",
+    "stops": [
+      "<|im_end|>",
+      "<|im_start|>"
+    ],
+    "suffix": "<|im_end|>\n<|im_start|>assistant\n",
+    "sysPrefix": "<|im_start|>system\n",
+    "sysSuffix": "<|im_end|>"
+  },
+  "Llama2": {
+    "models": [
+      "llama2-placeholder"
+    ],
+    "prefix": "\n\n[INST] ",
+    "stops": [
+      "[/INST]",
+      "[INST]"
+    ],
+    "suffix": "[/INST]\n\n",
+    "sysPrefix": "",
+    "sysSuffix": "\n\n"
+  },
+  "Mistral": {
+    "models": [
+      "mistral instruct"
+    ],
+    "prefix": "\n[INST] ",
+    "stops": [
+      "[/INST]",
+      "[INST]",
+      "</s>"
+    ],
+    "suffix": "[/INST]\n",
+    "sysPrefix": "",
+    "sysSuffix": "\n<s>"
+  },
+  "Orca": {
+    "models": [
+      "upstage",
+      "neural"
+    ],
+    "prefix": "\n### User:\n",
+    "stops": [
+      "###",
+      "User:"
+    ],
+    "suffix": "\n### Assistant:\n",
+    "sysPrefix": "### System:\n",
+    "sysSuffix": "\n"
+  },
+  "Phind": {
+    "models": [
+      "phind"
+    ],
+    "prefix": "\n### User Message\n",
+    "stops": [
+      "###",
+      "User Message"
+    ],
+    "suffix": "\n### Assistant\n",
+    "sysPrefix": "### System Prompt\n",
+    "sysSuffix": "\n"
+  },
+  "Vicuna": {
+    "models": [
+      "xwin",
+      "synthia"
+    ],
+    "prefix": "\nUSER: ",
+    "stops": [
+      "</s>",
+      "USER:",
+      "SYSTEM:"
+    ],
+    "suffix": "</s>\nASSISTANT: ",
+    "sysPrefix": "SYSTEM: ",
+    "sysSuffix": "\n"
+  },
+  "Zephyr": {
+    "models": [
+      "zephyr"
+    ],
+    "prefix": " ",
+    "stops": [
+      "</s>"
+    ],
+    "suffix": "</s>\n ",
+    "sysPrefix": " ",
+    "sysSuffix": "</s>\n"
+  },
+  "default": {
+    "prefix": "\n### Instruction:\n",
+    "stops": [
+      "### Instruction"
+    ],
+    "suffix": "\n### Response:\n",
+    "sysPrefix": "### System\n",
+    "sysSuffix": "\n"
+  }
+}

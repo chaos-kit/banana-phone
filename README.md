@@ -1,6 +1,6 @@
 # 🍌 Banana Phone API 🍌
 
-Banana Phone API 📞 is a relay API that acts as a bridge between clients and larger language models like LM Studio Server or similar platforms. It features a suite of functionalities including API key-based access control, automatic message formatting (autostyle), and real-time streaming responses from language models.
+Banana Phone API 📞 is a relay API that acts as a bridge between clients and larger language model inferencing servers. It is specifically designed to compliment LM Studio Server, but should be compatible with any, OpenAI-compatible endpoints. It features a suite of functionalities including API key-based access control, automatic message formatting to match the active model (some setup required), and real-time streaming responses from language models. It is lightweight and kind-hearted.
 
 ## 🎉 Features
 
@@ -39,8 +39,8 @@ Adjust the API settings by tweaking the `.env` file variables:
 
 - `LOCAL_PORT`: The port Banana Phone API will listen on.
 - `DESTINATION_API`: The destination API URL, like the LM Studio Server.
-- `ENDPOINT_COMPLETIONS`: Endpoint for getting completions.
-- `ENDPOINT_MODELS`: Endpoint for retrieving available models.
+- `ENDPOINT_COMPLETIONS`: The endpoint on the estination API for getting completions.
+- `ENDPOINT_MODELS`: The endpoint on the destination API for retrieving available models.
 - `API_KEYS`: List of API keys, comma-separated, authorizing access to Banana Phone API.
 - `WAN_ENABLED`: Toggle (`false` or `true`) to control remote host access.
 - `AUTOSTYLE`: Enable (`true`) or disable (`false`) autostyle for formatting messages.
@@ -58,29 +58,41 @@ Command-line arguments for `ring.sh` to override config settings:
 - `--nostyle`: Turn off message autostyling.
 - `--reload`: Auto-reload the server upon file changes.
 
-### 📝 Adding Models to `models.json`
+### 📝 Adding Models to `models.json` for automatic prompt formatting:
 
-To integrate additional language models:
+`models.json` includes premade configurations for Alpaca, ChatML, Llama2, Mistral, Orca, Phind, Vicuna, and Zephyr prompt formats, and has populated these configurations with a handful of currently popular models for automatic matching. To add more models under an existing configuation, simply take the model name or a sufficiently unique portion of a model name, taking care to match the case, and add it to the models array within the larger configuration dictionary. For example, if you wanted to add Mistral 7b, you would add it like so:
 
-- Define the stop tokens, message prefixes, and suffixes in `models.json`.
-- Add a model configuration object matching the format of existing entries.
-
-Example:
-
-```json
+``` models.json
 {
-  "NewModelConfig": {
-    "stops": ["<end>"],
-    "sysPrefix": "System says: ",
-    "sysSuffix": "\n---\n",
-    "prefix": "User asks: ",
-    "suffix": "\nReply: ",
-    "models": ["shiney-new-model"]
-  }
+  ... other configurations ...
+  "Mistral": {
+    "models": [
+      "mistral instruct",
+      "mistral 7b" # <--- simply add it here!
+    ],
+    "prefix": "\n[INST] ",
+    "stops": [
+      "[/INST]",
+      "[INST]",
+      "</s>"
+    ],
+    "suffix": "[/INST]\n",
+    "sysPrefix": "",
+    "sysSuffix": "\n<s>"
+  },
+  ... other configurations ...
 }
 ```
 
-Ensure the model IDs in the `models` array match those returned by the API's model endpoint.
+Similarly, you can add entirely new configurations by replicating the structure of existing ones and filling the relevant information prefixes, suffixes, and stops, which are all readily found on `HuggingFace`.
+
+### Tips:
+- When you specify API keys in the .env file, separate them by commas without spaces,just,like,so.
+- Specifying any API keys bars queries that don't include them in their header. Set it API_KEYS to "" if you want to open it back up.
+- Use the same format for API keys as OpenAI uses when querying, i.e., `Authorization: Bearer {{key}}`.
+- Ensure the model IDs in the `models` array match those returned by the API's model endpoint, or at least a sufficiently unique portion of them.
+- You may encounter unexpected behavior if you use overly broad model shortnames such that the active model matches to multiple configurations.
+- JSON formatting is notoriously persnickity. A missing comma, curly bracket, or even inadvertently using curly instead of straight quotation marks will likely break the whole script. Consider a tool like `OK JSON` if you find yourself editing this or other JSONs frequently.
 
 ### ⚠️ Disclaimer
 

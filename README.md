@@ -67,7 +67,13 @@ Command-line arguments for `ring.sh` to override config settings:
 - `--nostyle`: Turn off message autostyling.
 - `--reload`: Auto-reload the server upon file changes.
 
-#### Tips:
+#### ⚠️ Disclaimer:
+- Enabling `--wan` poses security risks, especially if:
+  - No API key is set (i.e., `API_KEYS` is empty).
+  - Your network's firewall leaves the specified port open.
+- For safer remote access, consider establishing a Cloudflare Tunnel or setting up a reverse proxy rather than using the WAN option directly.
+
+#### Other Tips:
 - When you specify API keys in the .env file, make sur eyou separate them by commas without spaces: just,like,so.
 - Specifying any API keys bars queries that don't include them in their header. Set API_KEYS to "" for effective glasnost.
 - Use the same format for API keys as OpenAI uses when querying, i.e., `Authorization: Bearer {{key}}`.
@@ -106,13 +112,5 @@ Similarly, you can add entirely new configurations by replicating the structure 
 - JSON formatting is notoriously persnickity. A missing comma, curly bracket, or even inadvertently using curly instead of straight quotation marks will likely break the whole script.
 - Consider a tool like `OK JSON` if you find yourself editing this or other JSONs frequently.
 
-### ⚠️ Disclaimer
-
-Enabling `--wan` poses security risks, especially if:
-
-- No API key is set (i.e., `API_KEYS` is empty).
-- Your network's firewall leaves the specified port open.
-
-For safer remote access, consider establishing a Cloudflare Tunnel or setting up a reverse proxy rather than using the WAN option directly.
 
 ## 🎶 This README was composed with the help of ChatGPT 🎶

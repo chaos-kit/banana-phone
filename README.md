@@ -27,11 +27,20 @@ git clone https://github.com/your-username/banana-phone.git
 cd banana-phone
 ```
 
-2. Use the `ring.sh` script to prepare the environment and kick off the API server:
+2. Rename .env.example to .env and configure it (see [[Configuration]]):
 
 ```sh
-bash ring.sh --port 3456
+cp .env.example .env
+nano .env   # or use any other text editor
 ```
+
+3. Launch `ring.sh` to build the virtual environment, install necessary dependencies within that environment, and kick off the API server:
+
+```sh
+chmod +X ring.sh # only required the first time you run it
+./ring.sh --port 3456
+```
+
 
 ### Configuration
 

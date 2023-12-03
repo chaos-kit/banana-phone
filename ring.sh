@@ -15,6 +15,7 @@ WAN_ENABLED=${WAN_ENABLED:-false}
 AUTOSTYLE=${AUTOSTYLE:-true}
 SYSTEM_MSG=${SYSTEM_MSG:-"You are a helpful AI."}
 SYSTEM_OVERRIDE=${SYSTEM_OVERRIDE:-false}
+NOSTREAM=${NOSTREAM:-false}
 USE_TMUX=false
 RELOAD=false
 
@@ -34,12 +35,18 @@ if [ ! -d "$VENV_DIR" ]; then
     $PYTHON_BIN -m venv "$VENV_DIR"
 fi
 
+PYTHON_BIN=./venv/bin/python
+
 # Activate the virtual environment
 source "$VENV_DIR/bin/activate"
+which python
+which pip
+pip list
 
 # Install or update dependencies
 echo "Installing/Updating dependencies..."
-pip install fastapi uvicorn httpx pytz pydantic python-dotenv
+pip install fastapi uvicorn httpx pytz pydantic python-dotenv h2
+pip install 'httpx[http2]'
 
 UVICORN_BIN=$(which uvicorn || echo "uvicorn")
 TMUX_BIN=$(which tmux || echo "tmux")
@@ -67,6 +74,10 @@ while [ "$#" -gt 0 ]; do
       USE_TMUX=true
       shift
       ;;
+    --nostream)
+      NOSTREAM=true
+      shift
+      ;;
     --wan)
       WAN_ENABLED=true
       shift
@@ -91,9 +102,10 @@ export DESTINATION_API
 export SYSTEM_MSG
 export SYSTEM_OVERRIDE
 export AUTOSTYLE
+export NOSTREAM
 
 # Build the command to launch Uvicorn
-COMMAND="/opt/homebrew/bin/python3.11 -m uvicorn BananaPhone:api --port $LOCAL_PORT"
+COMMAND="$VENV_DIR/bin/python -m uvicorn BananaPhone:api --port $LOCAL_PORT"
 
 # If WAN is enabled, modify the command
 if [ "$WAN_ENABLED" = true ]; then

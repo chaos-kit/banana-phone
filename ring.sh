@@ -56,7 +56,7 @@ while [ "$#" -gt 0 ]; do
       shift 2
       ;;
     --sys)
-      SYSTEM_PROMPT="$2"
+      SYSTEM_MSG="$2"
       shift 2
       ;;
     --forcesys)

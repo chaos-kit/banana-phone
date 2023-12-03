@@ -4,7 +4,7 @@
 ################### IMPORTS ###################
 import asyncio
 import os, sys, io
-import httpx
+import httpx, h2
 import re, json, csv
 import logging
 import tempfile
@@ -38,6 +38,7 @@ api_key = os.getenv('API_KEYS').split(',')
 system_msg = os.getenv("SYSTEM_MSG", "You are a helpful assistant.")
 system_override = os.getenv("SYSTEM_OVERRIDE", False)
 autostyle = os.getenv("AUTOSTYLE", True)
+nostream = os.getenv("NOSTREAM", False)
 
 
 ################### INITIALIZATIONS ###################
@@ -128,6 +129,7 @@ async def chat_completions(data: dict, request: Request):
         modified_data = data.copy()  # Create a shallow copy of data to avoid modifying the original data object
 
         is_streaming = modified_data.get("stream", False)
+        
         modified_data.setdefault('temperature', 0.7)
 
         modified_data = replace_instructions_content_system(modified_data)
@@ -154,7 +156,7 @@ async def chat_completions(data: dict, request: Request):
                 raise HTTPException(status_code=400, detail=f"No configuration found for model: {await fetch_active_model()}")
 
         # Create an HTTP client
-        client = httpx.AsyncClient()
+        client = httpx.AsyncClient(http2=True)
         logger.info(f"Sending data to destination API: {modified_data}")
 
         try:

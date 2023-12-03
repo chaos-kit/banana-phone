@@ -156,7 +156,7 @@ async def chat_completions(data: dict, request: Request):
                 raise HTTPException(status_code=400, detail=f"No configuration found for model: {await fetch_active_model()}")
 
         # Create an HTTP client
-        client = httpx.AsyncClient(http2=True)
+        client = httpx.AsyncClient()
         logger.info(f"Sending data to destination API: {modified_data}")
 
         try:
